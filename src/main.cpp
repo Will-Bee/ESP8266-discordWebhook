@@ -11,17 +11,6 @@
 
 
 
-// {
-// "content": "@everyone",
-// "username": "OFD-Device",
-// "embeds": [
-//     {
-//         "title": "Status: {Status_kabelu}",
-//         "description": "OPTICAL FIBER DETECTOR"
-//     }
-// ]
-// }
-
 
 
 WiFiManager wifiManager;
@@ -40,7 +29,7 @@ int notifState;
 int lastTime = 2;
 int httpCode;
 bool state = false;
-String host = "https://discord.com/api/webhooks/1055847326691889172/W9ni-XBsFeYpXVgJ9eikaxb6Pdd34UHFCP3ehBtTaQeEF6b0U4uLxrJX_Hh_4je7gPYY";
+String host = "";
 String payload;
 
 
@@ -50,22 +39,30 @@ String payload;
 
 
 
+// {
+// "content": "@everyone",
+// "username": "OFD-Device",
+// "embeds": [
+//     {
+//         "title": "Status: {Status_kabelu}",
+//         "description": "OPTICAL FIBER DETECTOR"
+//     }
+// ]
+// }
 
 
 
 
 
+bool wifiCheck() {
+  // Check if device is connected to internet
 
+  if (WiFi.status() != WL_CONNECTED) {
+    return 0;
+  }
 
-
-
-
-
-
-
-
-
-
+  return 1;
+}
 
 
 
@@ -104,7 +101,7 @@ int notification(bool status){
   }
 
   // Check if device is connected to internet
-  if (WiFi.status() != WL_CONNECTED) {
+  if (wifiCheck() == 0) {
     lcd.setCursor(0,1);
     lcd.print("No internet");
     // end program if not connected
