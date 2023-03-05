@@ -27,7 +27,7 @@ int notifState;
 int lastTime = 2;
 int httpCode;
 bool state = false;
-String host = "https://discord.com/api/webhooks/1055847326691889172/W9ni-XBsFeYpXVgJ9eikaxb6Pdd34UHFCP3ehBtTaQeEF6b0U4uLxrJX_Hh_4je7gPYY";
+String host = "";
 String payload;
 
 
