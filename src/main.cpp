@@ -11,6 +11,20 @@
 
 
 
+// JSON:
+// {
+// "content": "@everyone",
+// "username": "OFD-Device",
+// "embeds": [
+//     {
+//         "title": "Status: {Status_kabelu}",
+//         "description": "OPTICAL FIBER DETECTOR"
+//     }
+// ]
+// }
+
+
+
 WiFiManager wifiManager;
 WiFiClientSecure client;
 HTTPClient http;
@@ -29,32 +43,6 @@ int httpCode;
 bool state = false;
 String host = "";
 String payload;
-
-
-
-// Webhook JSON:
-// {
-// "content": "@everyone",
-// "username": "OFD-Device",
-// "embeds": [
-//     {
-//         "title": "Status: {Status_kabelu}",
-//         "description": "OPTICAL FIBER DETECTOR"
-//     }
-// ]
-// }
-
-
-
-bool wifiCheck() {
-  // Check if device is connected to internet
-
-  if (WiFi.status() != WL_CONNECTED) {
-    return 0;
-  }
-
-  return 1;
-}
 
 
 
@@ -81,6 +69,7 @@ void messageBuild(){
 
 
 
+
 int notification(bool status){
   // Send POST request to Discord webhook
 
@@ -93,17 +82,12 @@ int notification(bool status){
   }
 
   // Check if device is connected to internet
-  if (wifiCheck() == 0) {
+  if (WiFi.status() != WL_CONNECTED) {
     lcd.setCursor(0,1);
     lcd.print("No internet");
     // end program if not connected
     return 0;
   }
-
-  // payload = http.getString();
-  // Serial.println(payload);
-  // Serial.println(JSON);
-  // Serial.println(httpCode);
 
   return 1;
 }
@@ -134,7 +118,7 @@ void setup() {
 
   lcd.clear();
   lcd.setCursor(0,0);
-  lcd.print("Sensor value: ");
+  lcd.print("Status: ");
 
 }
 
