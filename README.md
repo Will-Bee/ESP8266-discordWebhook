@@ -13,13 +13,12 @@ Software for chool project device
 ### Configuration
 
 * Your device MUST have ESP8266
-* This project uses NodeMcu V3
+* This project was built with NodeMcu V3 board
 
 #### Edit variables
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `host` | `string` | **Required**. Your Discord webhook URL |
 | `SENSOR_PIN` | `uint8_t` | **Required**. Pin used by sensor |
 
 * In messageBuild() you can edit your custom messages
