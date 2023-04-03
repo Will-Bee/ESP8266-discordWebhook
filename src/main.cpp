@@ -41,9 +41,8 @@ int notifState;
 int lastTime = 2;
 int httpCode;
 bool state = false;
-String host = "";
+String webhookLink = "";
 String payload;
-
 
 
 void messageBuild(){
@@ -92,7 +91,66 @@ int notification(bool status){
   return 1;
 }
 
+bool getWebhookLink() {
+  // Get webhook link from user
+  // url of api: https://www.bartosek.cz/shared/OFD/api/?secret=heslo
+  // Json will be like this:
+  // {
+  //   "webhook": "url of webhook"
+  // }
 
+
+
+  // Get webhook link from user
+  Serial.println("Getting webhook link...");
+  Serial.print("Getting webhook link...");
+
+
+
+  // Get webhook link from user
+  client.connect("www.bartosek.cz", 443);
+  http.begin(client, "https://www.bartosek.cz/shared/OFD/api/?secret=heslo");
+  httpCode = http.GET();
+
+
+
+  // Print HTTP response
+  if (httpCode > 0) {
+    String payload = http.getString();
+    client.stop();
+
+    // All "/" are \/ in response, so we need to replace them with /
+    payload.replace("\\/", "/");
+
+    // Example of payload:
+    // {"URL":"https://discord.com/api/webhooks/123456789/123456789","text":"test"}
+
+    // Parse JSON without using ArduinoJson
+    // Get webhook link
+    int start = payload.indexOf("https://discord.com/api/webhooks/");
+    int end = payload.indexOf("\",\"text\":\"test\"}");
+    webhookLink = payload.substring(start, end);
+
+    // Cut this part from webhook: ","text":"...
+    webhookLink = webhookLink.substring(0, webhookLink.indexOf("\",\"text\""));
+
+    Serial.println("Done");
+    Serial.print("Webhook link: ");
+    Serial.println(webhookLink);
+
+    return 1;
+
+
+
+
+
+
+  } else {
+    Serial.println("Error on HTTP request");
+    return 0;
+  }
+  return 0;
+}
 
 void setup() {
 
@@ -111,8 +169,10 @@ void setup() {
 
   client.setInsecure();
 
-  client.connect(host, 443);
-  http.begin(client, host);
+  getWebhookLink();
+
+  client.connect(webhookLink, 443);
+  http.begin(client, webhookLink);
 
   messageBuild();
 
