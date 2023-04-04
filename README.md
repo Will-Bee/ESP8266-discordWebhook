@@ -20,6 +20,7 @@ Software for chool project device
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `SENSOR_PIN` | `uint8_t` | **Required**. Pin used by sensor |
+| `yourApi` | `String` | **Required**. URL Of your own API |
 
 * In messageBuild() you can edit your custom messages
 

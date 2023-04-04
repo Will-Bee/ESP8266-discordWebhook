@@ -43,6 +43,7 @@ int httpCode;
 bool state = false;
 String webhookLink = "";
 String payload;
+String yourApi = "https://www.bartosek.cz/shared/OFD/api/?secret=heslo";
 
 
 void messageBuild(){
@@ -109,7 +110,7 @@ bool getWebhookLink() {
 
   // Get webhook link from user
   client.connect("www.bartosek.cz", 443);
-  http.begin(client, "https://www.bartosek.cz/shared/OFD/api/?secret=heslo");
+  http.begin(client, yourApi);
   httpCode = http.GET();
 
 
@@ -128,7 +129,7 @@ bool getWebhookLink() {
     // Parse JSON without using ArduinoJson
     // Get webhook link
     int start = payload.indexOf("https://discord.com/api/webhooks/");
-    int end = payload.indexOf("\",\"text\":\"test\"}");
+    int end = payload.indexOf("\",\"text\"");
     webhookLink = payload.substring(start, end);
 
     // Cut this part from webhook: ","text":"...
