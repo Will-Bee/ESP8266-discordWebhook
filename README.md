@@ -13,7 +13,7 @@ Software for chool project device
 ### Configuration
 
 * Your device MUST have ESP8266
-* This project was built with NodeMcu V3 board
+* This project was made for NodeMcu V3 board
 
 #### Edit variables
 
